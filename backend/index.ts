@@ -7,6 +7,10 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });
 
+app.get('/api/users/:id', (req: Request, res: Response) => {
+  res.send('DONE')
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
