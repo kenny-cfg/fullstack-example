@@ -8,6 +8,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.get('/api/users/:id', (req: Request, res: Response) => {
+  const id = req.params.id;
   res.send('DONE')
 })
 
