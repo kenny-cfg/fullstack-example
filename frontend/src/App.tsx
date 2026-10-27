@@ -1,6 +1,8 @@
+import UserFetchExample from "./UserFetchExample"
+
 const App = () => {
   return (
-    <p>Hello world</p>
+    <UserFetchExample />
   )
 }
 
