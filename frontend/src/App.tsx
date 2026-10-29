@@ -2,7 +2,10 @@ import UserFetchExample from "./UserFetchExample"
 
 const App = () => {
   return (
-    <UserFetchExample />
+    <>
+      <img src="./poo.jpg"/>
+      <UserFetchExample />
+    </>
   )
 }
 
