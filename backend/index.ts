@@ -17,6 +17,11 @@ app.get('/api/task', async (req: Request, res: Response) => {
   res.send(data);
 })
 
+app.get('/api/task/:id', async (req: Request, res: Response) => {
+  console.log(req.params.id);
+  res.send('TODO')
+})
+
 app.get('/api/users/:id', async (req: Request, res: Response) => {
   const id = req.params.id as string;
   const user = await fetchUser(id);
