@@ -34,6 +34,12 @@ const getSingle = async (id: number): Promise<Task | undefined> => {
   return toTask(data[0]);
 }
 
+const create = async (task: Task): Promise<TaskWithIdentifier> => {
+  const [data] = await db().execute<RowDataPacket[]>('insert into tasks (title, completed) values (?, ?)', [task.title, task.completed])
+  console.log(data);
+  throw Error('TODO');
+}
+
 export default {
   getAll,
   getSingle

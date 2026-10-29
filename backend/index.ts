@@ -2,12 +2,11 @@ import express, { Express, Request, Response } from 'express';
 import fetchUser from './fetchUser';
 import cors from 'cors';
 import 'dotenv/config';
-import db from './db/database'
-import { RowDataPacket } from 'mysql2';
 import taskService from './service/taskService';
 
 const app: Express = express();
 app.use(cors());
+app.use(express.json());
 const port = 3000;
 
 app.get('/', async (req: Request, res: Response) => {
@@ -31,6 +30,12 @@ app.get('/api/task/:id', async (req: Request, res: Response) => {
     return;
   }
   res.send(task)
+})
+
+app.post('/api/task', async (req: Request, res: Response) => {
+  const newTaskRaw = req.body;
+  console.log(newTaskRaw);
+  res.send('HELLO')
 })
 
 app.get('/api/users/:id', async (req: Request, res: Response) => {
