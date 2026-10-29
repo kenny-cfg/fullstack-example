@@ -4,6 +4,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import db from './db/database'
 import { RowDataPacket } from 'mysql2';
+import taskService from './service/taskService';
 
 const app: Express = express();
 app.use(cors());
@@ -14,8 +15,7 @@ app.get('/', async (req: Request, res: Response) => {
 });
 
 app.get('/api/task', async (req: Request, res: Response) => {
-  const [data] = await db().execute('select * from tasks');
-  res.send(data);
+  res.send(await taskService.getAll());
 })
 
 app.get('/api/task/:id', async (req: Request, res: Response) => {
@@ -25,13 +25,12 @@ app.get('/api/task/:id', async (req: Request, res: Response) => {
     res.status(400).send('Supplied ID is not a number');
     return;
   }
-  const [data] = await db().execute<RowDataPacket[]>('select * from tasks where id = ?', [id]);
-  if (data.length === 0) {
+  const task = await taskService.getSingle(id);
+  if (task === undefined) {
     res.status(404).send('Task not found');
     return;
   }
-  const response = data[0];
-  res.send(response)
+  res.send(task)
 })
 
 app.get('/api/users/:id', async (req: Request, res: Response) => {
