@@ -10,8 +10,6 @@ const access: PoolOptions = {
   queueLimit: 0
 };
 
-console.log(access);
-
 const conn = mysql.createPool(access).promise();
 
 const getConnection = () => conn;
