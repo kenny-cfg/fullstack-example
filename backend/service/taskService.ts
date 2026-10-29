@@ -57,7 +57,6 @@ const update = async (id: number, task: Partial<Task>): Promise<Task | undefined
       id
     ]
   )
-  console.log({ ...single, ...task })
   return {
     ...single,
     ...task
