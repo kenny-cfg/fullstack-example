@@ -1,10 +1,8 @@
 import express, { Express, Request, Response } from 'express';
 import fetchUser from './fetchUser';
-import db from './db/database'
 import cors from 'cors';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import 'dotenv/config';
+import db from './db/database'
 
 const app: Express = express();
 app.use(cors());
