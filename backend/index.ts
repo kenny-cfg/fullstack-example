@@ -18,13 +18,15 @@ const access: PoolOptions = {
   queueLimit: 0
 };
 
-const conn = mysql.createPool(access).promise();
-
 app.get('/', async (req: Request, res: Response) => {
+  res.send('HELLO');
+});
+
+app.get('/api/task', async (req: Request, res: Response) => {
   const [data] = await db().execute('select * from tasks');
   console.log(data);
   res.send(data);
-});
+})
 
 app.get('/api/users/:id', async (req: Request, res: Response) => {
   const id = req.params.id as string;
