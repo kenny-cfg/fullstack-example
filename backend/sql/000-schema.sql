@@ -1,0 +1,11 @@
+DROP DATABASE IF EXISTS tasks;
+
+CREATE DATABASE tasks;
+USE tasks;
+
+
+CREATE TABLE tasks (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(255),
+  completed BOOL
+)
