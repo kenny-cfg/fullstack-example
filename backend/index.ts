@@ -18,6 +18,11 @@ app.get('/api/task', async (req: Request, res: Response) => {
 })
 
 app.get('/api/task/:id', async (req: Request, res: Response) => {
+  const idRaw = req.params.id as string;
+  if (!Number.isInteger(parseInt(idRaw))) {
+    res.status(400).send('Supplied ID is not a number');
+    return;
+  }
   console.log(req.params.id);
   res.send('TODO')
 })
