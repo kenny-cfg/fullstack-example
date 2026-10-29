@@ -3,6 +3,7 @@ import fetchUser from './fetchUser';
 import cors from 'cors';
 import 'dotenv/config';
 import db from './db/database'
+import { RowDataPacket } from 'mysql2';
 
 const app: Express = express();
 app.use(cors());
@@ -19,12 +20,18 @@ app.get('/api/task', async (req: Request, res: Response) => {
 
 app.get('/api/task/:id', async (req: Request, res: Response) => {
   const idRaw = req.params.id as string;
-  if (!Number.isInteger(parseInt(idRaw))) {
+  const id = parseInt(idRaw);
+  if (!Number.isInteger(id)) {
     res.status(400).send('Supplied ID is not a number');
     return;
   }
-  console.log(req.params.id);
-  res.send('TODO')
+  const [data] = await db().execute<RowDataPacket[]>('select * from tasks where id = ?', [id]);
+  if (data.length === 0) {
+    res.status(404).send('Task not found');
+    return;
+  }
+  const response = data[0];
+  res.send(response)
 })
 
 app.get('/api/users/:id', async (req: Request, res: Response) => {
