@@ -1,6 +1,7 @@
 import mysql, { PoolOptions } from 'mysql2';
 import express, { Express, Request, Response } from 'express';
 import fetchUser from './fetchUser';
+import db from './db/database'
 import cors from 'cors';
 
 const app: Express = express();
@@ -20,7 +21,7 @@ const access: PoolOptions = {
 const conn = mysql.createPool(access).promise();
 
 app.get('/', async (req: Request, res: Response) => {
-  const [data] = await conn.execute('select * from tasks');
+  const [data] = await db().execute('select * from tasks');
   console.log(data);
   res.send(data);
 });
