@@ -13,7 +13,7 @@ const UserFetchExample = () => {
   const [user, setUser] = useState<User | undefined>()
 
   const fetchUser = async () => {
-    const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+    const response = await fetch(`/api/users/${userId}`);
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
