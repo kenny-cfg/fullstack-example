@@ -3,7 +3,7 @@ import UserFetchExample from "./UserFetchExample"
 const App = () => {
   return (
     <>
-      <img src="./poo.jpg"/>
+      <img height="100px" width="100px" src="./poo.jpg"/>
       <UserFetchExample />
     </>
   )
