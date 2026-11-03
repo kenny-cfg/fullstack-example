@@ -12,8 +12,7 @@ type Props = {
 }
 
 const UserFetchExample = ({ userId }: Props) => {
-  const [fetchStatus, setFetchStatus] = useState<'loading' | 'error' | 'loaded' | undefined>();
-  const [user, setUser] = useState<User | undefined>();
+  const [fetchStatus, setFetchStatus] = useState<'loading' | 'error' | User | undefined>();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -35,8 +34,7 @@ const UserFetchExample = ({ userId }: Props) => {
       if (typeof result.lastLogin !== 'string') {
         throw new Error('lastLogin is not a string')
       }
-      setUser(result);
-      setFetchStatus('loaded')
+      setFetchStatus(result)
     }
     setFetchStatus('loading')
     fetchUser();
@@ -47,8 +45,10 @@ const UserFetchExample = ({ userId }: Props) => {
       return <p>...LOADING</p>
     case 'error':
       return <p>OH NO!</p>
+    case undefined:
+      return <p>INITIALIZING</p>
     default:
-      return <p>{JSON.stringify(user)}</p>
+      return <p>{JSON.stringify(fetchStatus)}</p>
   }
 }
 
