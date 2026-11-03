@@ -43,6 +43,11 @@ const create = async (task: Task): Promise<TaskWithIdentifier> => {
   }
 }
 
+const deleteTask = async (id: number): Promise<boolean> => {
+  const [data] = await db().execute<ResultSetHeader>('delete from tasks where id = ?', [id])
+  return data.affectedRows === 1;
+}
+
 const update = async (id: number, task: Partial<Task>): Promise<Task | undefined> => {
   // TODO: Probably should wrap in a transaction
   const single = await getSingle(id);
@@ -67,5 +72,6 @@ export default {
   getAll,
   getSingle,
   create,
-  update
+  update,
+  deleteTask
 }

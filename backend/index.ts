@@ -81,6 +81,20 @@ app.put('/api/task/:id', async (req: Request, res: Response) => {
   res.send(result);
 })
 
+app.delete('/api/task/:id', async (req: Request, res: Response) => {
+  const id = extractNumericId(req);
+  if (id === undefined) {
+    res.status(400).send('Task ID needs to be a number');
+    return;
+  }
+  const result = await taskService.deleteTask(id);
+  if (result) {
+    res.status(204).send();
+  } else {
+    res.status(404).send();
+  }
+})
+
 app.get('/api/users/:id', async (req: Request, res: Response) => {
   const id = req.params.id as string;
   setTimeout(async () => {
