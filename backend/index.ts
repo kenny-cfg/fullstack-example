@@ -3,11 +3,17 @@ import fetchUser from './fetchUser';
 import cors from 'cors';
 import 'dotenv/config';
 import taskService, { Task } from './service/taskService';
+import path from 'path';
 
 const app: Express = express();
 app.use(cors());
 app.use(express.json());
-const port = 3000;
+app.use(express.static('public'));
+const portRaw = process.env['application.port'];
+if (!portRaw) {
+  throw new Error('application.port not defined in .env file')
+}
+const port = parseInt(portRaw);
 
 const extractNumericId = (req: Request): number | undefined => {
   const idRaw = req.params.id as string;
@@ -19,7 +25,7 @@ const extractNumericId = (req: Request): number | undefined => {
 }
 
 app.get('/', async (req: Request, res: Response) => {
-  res.send('HELLO');
+  res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 app.get('/api/task', async (req: Request, res: Response) => {
