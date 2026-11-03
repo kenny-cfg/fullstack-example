@@ -13,13 +13,16 @@ type Props = {
 
 const UserFetchExample = ({ userId }: Props) => {
   const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [user, setUser] = useState<User | undefined>();
 
   useEffect(() => {
     const fetchUser = async () => {
       const response = await fetch(`/api/users/${userId}`);
       if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
+        setIsError(true);
+        setLoading(false);
+        return;
       }
       const result = await response.json() as User;
       if (typeof result.id !== 'number') {
@@ -43,6 +46,10 @@ const UserFetchExample = ({ userId }: Props) => {
   
   if (loading) {
     return <p>...LOADING</p>
+  }
+  
+  if (isError) {
+    return <p>OH NO!</p>
   }
 
   return <div >
