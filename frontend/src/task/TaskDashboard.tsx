@@ -22,10 +22,14 @@ export default () => {
     fetchTasks();
   })
 
+  const handleDelete = (task: TaskWithIdentifier) => {
+    setTasks(currentTasks => currentTasks?.filter(it => it.id !== task.id))
+  }
+
   return <>
     <p>TASKS</p>
     <ul>
-      {tasks?.map(task => <TaskCard task={task} />)}
+      {tasks?.map(task => <TaskCard onDelete={() => handleDelete(task)} task={task} />)}
     </ul>
   </>
 }
