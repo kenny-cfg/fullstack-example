@@ -12,16 +12,14 @@ type Props = {
 }
 
 const UserFetchExample = ({ userId }: Props) => {
-  const [loading, setLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [fetchStatus, setFetchStatus] = useState<'loading' | 'error' | 'loaded' | undefined>();
   const [user, setUser] = useState<User | undefined>();
 
   useEffect(() => {
     const fetchUser = async () => {
       const response = await fetch(`/api/users/${userId}`);
       if (!response.ok) {
-        setIsError(true);
-        setLoading(false);
+        setFetchStatus('error')
         return;
       }
       const result = await response.json() as User;
@@ -38,23 +36,20 @@ const UserFetchExample = ({ userId }: Props) => {
         throw new Error('lastLogin is not a string')
       }
       setUser(result);
-      setLoading(false);
+      setFetchStatus('loaded')
     }
-    setLoading(true)
+    setFetchStatus('loading')
     fetchUser();
   }, [userId])
   
-  if (loading) {
-    return <p>...LOADING</p>
+  switch (fetchStatus) {
+    case 'loading':
+      return <p>...LOADING</p>
+    case 'error':
+      return <p>OH NO!</p>
+    default:
+      return <p>{JSON.stringify(user)}</p>
   }
-  
-  if (isError) {
-    return <p>OH NO!</p>
-  }
-
-  return <div >
-    <p>{JSON.stringify(user)}</p>
-  </div>
 }
 
 export default UserFetchExample;
