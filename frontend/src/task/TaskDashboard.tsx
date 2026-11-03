@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
+import TaskCard from "./TaskCard"
 
-type Task = {
+export type Task = {
   title: string,
   completed: boolean
 }
 
-type TaskWithIdentifier = Task & {
+export type TaskWithIdentifier = Task & {
   id: number
 }
 
@@ -24,7 +25,7 @@ export default () => {
   return <>
     <p>TASKS</p>
     <ul>
-      {tasks?.map(task => <li>{task.title}</li>)}
+      {tasks?.map(task => <TaskCard task={task} />)}
     </ul>
   </>
 }
