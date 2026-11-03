@@ -83,8 +83,10 @@ app.put('/api/task/:id', async (req: Request, res: Response) => {
 
 app.get('/api/users/:id', async (req: Request, res: Response) => {
   const id = req.params.id as string;
-  const user = await fetchUser(id);
-  res.json(user);
+  setTimeout(async () => {
+    const user = await fetchUser(id);
+    res.json(user);
+  }, 2000)
 })
 
 app.listen(port, () => {
